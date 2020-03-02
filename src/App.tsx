@@ -1,17 +1,22 @@
 import './App.css';
+// import 'leaflet/dist/leaflet.css';
 
 import React, { useEffect, useState } from 'react';
 
-import Api from './api';
+import getMushroomData from './api';
+import MushroomMap from './components/MushroomMap';
 
 const App = () => {
   const [mushrooms, setMushrooms] = useState();
 
   useEffect(() => {
-    Api().then((mushrooms) => setMushrooms(mushrooms));
+    getMushroomData().then((mushrooms) => setMushrooms(mushrooms));
   }, []);
 
-  return <div className="App"></div>;
+  console.log('mushrooms');
+  console.log(mushrooms);
+
+  return <div className="App">{mushrooms ? <MushroomMap mushrooms={mushrooms} /> : <div>Loading...</div>}</div>;
 };
 
 export default App;

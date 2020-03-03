@@ -1,6 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { getArrayValuesFromEnumObject, getUniqueValues } from '../utils';
+import { Mushroom } from '../api';
+
+interface SelectBoxProps {
+  name: string;
+  enumObject: Object;
+  handleFilter: any;
+  mushroomFilter: any;
+  mushroomList: Array<Mushroom>;
+}
+
 const StyledSelectBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,15 +42,15 @@ const ClearButton = styled.button`
  * Casts object to an array and filter the values
  * @returns {Array} Returns an array of the key index.
  */
-const getArrayValuesFromEnumObject = (enumObject: Object) => {
-  const objectToArray = Object.values(enumObject);
-  const filterKeys = objectToArray.filter((item) => !isNaN(Number(item)));
-  return filterKeys;
+
+const getPossibleOptions = (name: String, list: Array<Mushroom>) => {
+  return name === 'spots'
+    ? getUniqueValues(list.map(({ spots }) => spots))
+    : getUniqueValues(list.map(({ color }) => color));
 };
 
-const renderSelectBoxList = (mushroomProperty: any) => {
-  const iterableList = getArrayValuesFromEnumObject(mushroomProperty);
-
+const renderSelectBoxList = (mushroomProperty: any, possibleOptions: Array<any>) => {
+  const iterableList = getArrayValuesFromEnumObject(mushroomProperty, possibleOptions);
   return (
     <>
       <option value="no-selection" disabled>
@@ -54,19 +65,13 @@ const renderSelectBoxList = (mushroomProperty: any) => {
   );
 };
 
-interface SelectBoxProps {
-  name: string;
-  enumObject: Object;
-  handleFilter: any;
-  mushroomFilter: any;
-}
-
-const SelectBox: React.SFC<SelectBoxProps> = ({ name, enumObject, handleFilter, mushroomFilter }) => {
+const SelectBox: React.SFC<SelectBoxProps> = ({ name, enumObject, handleFilter, mushroomFilter, mushroomList }) => {
+  const possibleOptions = getPossibleOptions(name, mushroomList);
   return (
     <StyledSelectBox>
       <StyledLabel htmlFor={name}>{name}</StyledLabel>
       <StyledSelect name={name} id={name} onChange={handleFilter} value={mushroomFilter[name]}>
-        {renderSelectBoxList(enumObject)}
+        {renderSelectBoxList(enumObject, possibleOptions)}
       </StyledSelect>
       <ClearButton onClick={handleFilter} name={name} value="no-selection">
         Clear filter

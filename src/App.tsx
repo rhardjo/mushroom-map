@@ -96,12 +96,14 @@ const App = () => {
                 enumObject={Spots}
                 handleFilter={handleFilterSelection}
                 mushroomFilter={mushroomFilter}
+                mushroomList={mushroomList}
               />
               <SelectBox
                 name="color"
                 enumObject={Color}
                 handleFilter={handleFilterSelection}
                 mushroomFilter={mushroomFilter}
+                mushroomList={mushroomList}
               />
             </SelectBoxContainer>
 

@@ -1,4 +1,31 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const StyledSelectBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 128px;
+  margin-bottom: 1em;
+`;
+const StyledLabel = styled.label`
+  color: #222;
+  text-transform: capitalize;
+  font-weight: bold;
+  padding: 0.5em 0;
+`;
+const StyledSelect = styled.select`
+  font-size: 14px;
+`;
+const ClearButton = styled.button`
+  background: none;
+  border: none;
+  padding: 0.25em 0;
+  text-decoration: underline;
+  color: #222;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: left;
+`;
 
 /**
  * Casts object to an array and filter the values
@@ -36,14 +63,15 @@ interface SelectBoxProps {
 
 const SelectBox: React.SFC<SelectBoxProps> = ({ name, enumObject, handleFilter, mushroomFilter }) => {
   return (
-    <div className="SelectBox">
-      <select className="SelectBox" name={name} onChange={handleFilter} value={mushroomFilter[name]}>
+    <StyledSelectBox>
+      <StyledLabel htmlFor={name}>{name}</StyledLabel>
+      <StyledSelect name={name} id={name} onChange={handleFilter} value={mushroomFilter[name]}>
         {renderSelectBoxList(enumObject)}
-      </select>
-      <button onClick={handleFilter} name={name} value="no-selection">
+      </StyledSelect>
+      <ClearButton onClick={handleFilter} name={name} value="no-selection">
         Clear filter
-      </button>
-    </div>
+      </ClearButton>
+    </StyledSelectBox>
   );
 };
 

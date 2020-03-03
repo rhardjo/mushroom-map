@@ -12,9 +12,13 @@ const GlobalStyle = createGlobalStyle`
    font-family: sans-serif;
  }`;
 
-const MapContainer = styled.div``;
-const MapFilter = styled.form`
-  padding: 0.5em;
+const MapContainer = styled.div`
+  display: flex;
+`;
+
+const SelectBoxContainer = styled.div`
+  background-color: #fafafa;
+  padding: 2em 1em;
 `;
 
 const Loading = styled.div`
@@ -86,7 +90,7 @@ const App = () => {
       <div className="App">
         {mushroomList ? (
           <MapContainer>
-            <MapFilter action="">
+            <SelectBoxContainer>
               <SelectBox
                 name="spots"
                 enumObject={Spots}
@@ -99,7 +103,8 @@ const App = () => {
                 handleFilter={handleFilterSelection}
                 mushroomFilter={mushroomFilter}
               />
-            </MapFilter>
+            </SelectBoxContainer>
+
             <MushroomMap mushrooms={mushroomList} />
           </MapContainer>
         ) : (

@@ -9,6 +9,9 @@ interface IMushroomPopup {
   borderColor: string;
 }
 
+const MushroomImage = styled.img`
+  width: 100%;
+`;
 const MushroomName = styled.h2`
   text-transform: capitalize;
 `;
@@ -30,6 +33,7 @@ const MushroomMarker = ({ latlng, name, spots, color }: Mushroom) => {
   return (
     <Marker position={latlng}>
       <MushroomPopup borderColor={mushroomColor} borderStyle={mushroomStyle}>
+        <MushroomImage src={`https://loremflickr.com/320/240/mushroom?random=${name}`} />
         <MushroomName>{name}</MushroomName>
         <MushroomStyle>{`Style: ${mushroomStyle}`}</MushroomStyle>
         <MushroomColor>{`Color: ${mushroomColor}`}</MushroomColor>
